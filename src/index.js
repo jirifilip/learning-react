@@ -9,5 +9,5 @@ export { MyButton }
 const root = createRoot(document.getElementById("react-root"))
 
 root.render(
-    createElement(MyButton, {text: "Add a new text!"})
+    <MyButton text="Add a new text! Wohoo!"/>
 )
