@@ -43,5 +43,5 @@ export { MyButton }
 const root = ReactDOM.createRoot(document.getElementById("react-root"))
 
 root.render(
-    React.createElement(MyButton, {text: "Add a new text"})
+    React.createElement(MyButton, {text: "Add a new text!"})
 )
