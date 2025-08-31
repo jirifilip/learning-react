@@ -1,0 +1,16 @@
+{
+  "name": "test-react-hello-world",
+  "version": "1.0.0",
+  "description": "Testing package for React",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "python -m http.server && echo 'http://localhost:8000'"
+  },
+  "author": "Jirka",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  }
+}
