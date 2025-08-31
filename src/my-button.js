@@ -7,26 +7,22 @@ export function MyButton({ text }) {
         .fill(null)
         .map(
             (_, index) => (
-                createElement(
-                    "p",
-                    {
-                        key: `element-${index}`,
-                        style: {
-                            border: "2px solid black"
-                        }
-                    },
-                    "Some text - bla bla bla"
-                )
+                 <p
+                    key={index}
+                    style={{
+                        border: "2px solid black"
+                    }}
+                    >
+                    Some text - bla bla bla
+                </p>
             )
         )
 
 
     return (
         <div>
-            <button
-                onClick={(evt) => setTextCount(textCount + 1)}
-                >
-                text
+            <button onClick={(evt) => setTextCount(textCount + 1)}>
+            {text}
             </button>
             {texts}
         </div>
