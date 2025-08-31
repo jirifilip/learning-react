@@ -1,11 +1,38 @@
-
 function MyButton({text}) {
+    const [textCount, setTextCount] = React.useState(4)
+
     return (
         React.createElement(
-            "button",
-            {onClick: (evt) => console.log("hello", evt)},
-            text
+            "div",
+            {},
+            [
+                React.createElement(
+                    "button",
+                    {
+                        key: "btn1",
+                        onClick: (evt) => setTextCount(textCount + 1)
+                    },
+                    text
+                ),
+                ...Array(textCount)
+                    .fill(null)
+                    .map(
+                        (_, index) => (
+                            React.createElement(
+                                "p",
+                                {
+                                    key: `element-${index}`,
+                                    style: {
+                                        border: "2px solid black"
+                                    }
+                                },
+                                "Some text - bla bla"
+                            )
+                        )
+                    )
+            ]
         )
+        
     )
 }
 
@@ -13,5 +40,5 @@ function MyButton({text}) {
 const root = ReactDOM.createRoot(document.getElementById("react-root"))
 
 root.render(
-    MyButton({text: "I'm a button!"})
+    React.createElement(MyButton, {text: "Add a new text"})
 )
