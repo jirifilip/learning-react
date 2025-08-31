@@ -37,6 +37,9 @@ function MyButton({text}) {
 }
 
 
+export { MyButton }
+
+
 const root = ReactDOM.createRoot(document.getElementById("react-root"))
 
 root.render(
