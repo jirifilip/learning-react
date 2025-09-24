@@ -1,15 +1,15 @@
 import { createRoot } from "react-dom/client";
-import { MyButton } from "./my-button";
+import { TodoList } from "./todo-list";
 import { ExampleContext } from "./lib";
 
 
-export { MyButton }
+export { TodoList as MyButton }
 
 const root = createRoot(document.getElementById("react-root"))
 
 
 root.render(
     <ExampleContext value={{"some": "a"}}>
-        <MyButton text="Add a new text! Wohoo!"/>
+        <TodoList text="Add a new text! Wohoo!"/>
     </ExampleContext>
 )
