@@ -1,7 +1,6 @@
 import { useState, useContext, useReducer } from "react";
-import { ExampleContext } from "./lib";
-import { todoReducer, todoInitialState } from "./reducer";
 import { useAppDispatch, useAppStore } from "./hooks";
+import { ToDo } from "./todo";
 
 export function TodoList({ text }) {
     const store = useAppStore()
@@ -14,22 +13,10 @@ export function TodoList({ text }) {
         dispatch({type: "ADD", name: todoText, id})
     }
 
-    function handleRemove(id) {
-        dispatch({type: "REMOVE", id})
-    }
-
     const texts = store.todos
         .map(
             (todo, index) => (
-                 <p
-                    key={index}
-                    style={{
-                        border: "2px solid black"
-                    }}
-                    >
-                    {todo.id} - {todo.name}
-                    <button onClick={() => handleRemove(todo.id)}>DELETE</button>
-                </p>
+                 <ToDo key={index} name={todo.name} id={todo.id} />
             )
         )
 
