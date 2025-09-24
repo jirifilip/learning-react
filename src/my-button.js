@@ -1,7 +1,9 @@
-import { useState, createElement } from "react";
+import { useState, useContext } from "react";
+import { ExampleContext } from "./lib";
 
 export function MyButton({ text }) {
     const [textCount, setTextCount] = useState(4);
+    const example = useContext(ExampleContext)
 
     const texts = Array(textCount)
         .fill(null)
@@ -21,10 +23,13 @@ export function MyButton({ text }) {
 
     return (
         <div>
-            <button onClick={(evt) => setTextCount(textCount + 1)}>
+            <button onClick={(evt) => setTextCount(textCount + 2)}>
             {text}
             </button>
             {texts}
+            <div>
+            {example.some}
+            </div>
         </div>
 
     );

@@ -13,7 +13,6 @@ test("something", async () => {
     render(
         createElement(MyButton, {text: "hello"})
     )
-    expect(1 + 1).toBe(2)
 
     expect(screen.getByRole("button")).toHaveTextContent("hello")
 })
