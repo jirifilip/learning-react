@@ -11,7 +11,7 @@ export const todoReducer = (state, action) => {
         case "REMOVE":
             return {
                 ...state,
-                todos: state.todos.filter(todo => todo.name != action.name)
+                todos: state.todos.filter(todo => todo.id != action.id)
             }
         default:
             return { ...state }

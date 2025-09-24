@@ -3,15 +3,17 @@ import { ExampleContext } from "./lib";
 import { todoReducer, todoInitialState } from "./reducer";
 
 export function TodoList({ text }) {
-    const [textCount, setTextCount] = useState(4);
+    const [todoText, setTodoText] = useState("Example ToDo!");
+    const [state, dispatch] = useReducer(todoReducer, todoInitialState)
     const example = useContext(ExampleContext)
     
-    const [state, dispatch] = useReducer(todoReducer, todoInitialState)
-
     function handleAdd() {
-        const name = "New todo to do!"
-        const id = name.toLowerCase().replaceAll(/[!-. ]/g, "_")
-        dispatch({type: "ADD", name: "New todo to do!", id})
+        const id = todoText.toLowerCase().replaceAll(/[!-. ]/g, "_")
+        dispatch({type: "ADD", name: todoText, id})
+    }
+
+    function handleRemove(id) {
+        dispatch({type: "REMOVE", id})
     }
 
     const texts = state.todos
@@ -24,6 +26,7 @@ export function TodoList({ text }) {
                     }}
                     >
                     {todo.id} - {todo.name}
+                    <button onClick={() => handleRemove(todo.id)}>DELETE</button>
                 </p>
             )
         )
@@ -31,6 +34,7 @@ export function TodoList({ text }) {
 
     return (
         <div>
+            <textarea onChange={evt => setTodoText(evt.target.value)}></textarea>
             <button onClick={handleAdd}>
             {text}
             </button>
