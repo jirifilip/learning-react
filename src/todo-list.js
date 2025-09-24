@@ -1,11 +1,13 @@
 import { useState, useContext, useReducer } from "react";
 import { ExampleContext } from "./lib";
 import { todoReducer, todoInitialState } from "./reducer";
+import { useAppDispatch, useAppStore } from "./hooks";
 
 export function TodoList({ text }) {
+    const store = useAppStore()
+    const dispatch = useAppDispatch()
+
     const [todoText, setTodoText] = useState("Example ToDo!");
-    const [state, dispatch] = useReducer(todoReducer, todoInitialState)
-    const example = useContext(ExampleContext)
     
     function handleAdd() {
         const id = todoText.toLowerCase().replaceAll(/[!-. ]/g, "_")
@@ -16,7 +18,7 @@ export function TodoList({ text }) {
         dispatch({type: "REMOVE", id})
     }
 
-    const texts = state.todos
+    const texts = store.todos
         .map(
             (todo, index) => (
                  <p
@@ -39,9 +41,6 @@ export function TodoList({ text }) {
             {text}
             </button>
             {texts}
-            <div>
-            {example.some}
-            </div>
         </div>
 
     );
