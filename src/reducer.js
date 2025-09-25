@@ -5,9 +5,15 @@ export const todoReducer = (state, action) => {
         case "todo/fetched":
             return {
                 ...state,
+                todosFetched: true,
                 todos: action.todos.todos.map(todo => ({
                     id: todo.id, name: todo.todo, completed: todo.completed
                 }))
+            }
+        case "todo/set-fetched-false":
+            return {
+                ...state,
+                todosFetched: false
             }
         case "ADD":
             return {
@@ -32,6 +38,7 @@ export const todoReducer = (state, action) => {
 
 
 export const todoInitialState = {
+    todosFetched: false,
     todos: [
         {id: 1, name: "Clean up room"},
         {id: 2, name: "Do grocery shopping"}

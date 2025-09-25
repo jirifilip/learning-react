@@ -8,7 +8,7 @@ export function TodoList({ text }) {
 
     const [todoText, setTodoText] = useState("Example ToDo!");
 
-    useEffect(() => fetchToDos(), [])
+    useEffect(() => fetchToDos(), [store.todosFetched])
 
     function fetchToDos() {
         dispatch({
@@ -39,10 +39,9 @@ export function TodoList({ text }) {
     return (
         <div>
             <textarea onChange={evt => setTodoText(evt.target.value)}></textarea>
-            <button onClick={handleAdd}>
-            {text}
-            </button>
-            {texts}
+            <button onClick={handleAdd}>{text}</button>
+            <button onClick={() => dispatch({type: "todo/set-fetched-false"})}>Reset</button>
+            {store.todosFetched ? texts : <p>LOADING</p>}
         </div>
 
     );
