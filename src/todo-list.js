@@ -1,4 +1,4 @@
-import { useState, useContext, useReducer } from "react";
+import { useState, useContext, useReducer, useEffect } from "react";
 import { useAppDispatch, useAppStore } from "./hooks";
 import { ToDo } from "./todo";
 
@@ -7,7 +7,22 @@ export function TodoList({ text }) {
     const dispatch = useAppDispatch()
 
     const [todoText, setTodoText] = useState("Example ToDo!");
-    
+
+    useEffect(() => fetchToDos(), [])
+
+    function fetchToDos() {
+        dispatch({
+            type: "FUNCTION",
+            f: async (dispatch, state) => {
+                const response = await fetch('https://dummyjson.com/todos')
+                const todos = await response.json()
+                
+                dispatch({type: "todo/fetched", todos})
+            },
+            dispatch
+        })
+    }
+
     function handleAdd() {
         const id = todoText.toLowerCase().replaceAll(/[!-. ]/g, "_")
         dispatch({type: "ADD", name: todoText, id})

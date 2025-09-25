@@ -1,5 +1,14 @@
+import { act } from "react"
+
 export const todoReducer = (state, action) => {
     switch (action.type) {
+        case "todo/fetched":
+            return {
+                ...state,
+                todos: action.todos.todos.map(todo => ({
+                    id: todo.id, name: todo.todo, completed: todo.completed
+                }))
+            }
         case "ADD":
             return {
                 ...state,
@@ -13,6 +22,9 @@ export const todoReducer = (state, action) => {
                 ...state,
                 todos: state.todos.filter(todo => todo.id != action.id)
             }
+        case "FUNCTION": 
+            action.f(action.dispatch, state)
+            return { ...state }
         default:
             return { ...state }
     }
