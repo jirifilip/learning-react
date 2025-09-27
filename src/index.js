@@ -1,8 +1,8 @@
 import { createRoot } from "react-dom/client";
-import { TodoList } from "./todo-list";
-import { ExampleContext, StoreContext, DispatchContext } from "./lib";
+import { TodoList } from "./todo/todo-list";
+import { StoreContext, DispatchContext } from "./store/context";
 import { useReducer } from "react";
-import { initialState, reducer } from "./reducer";
+import { initialState, reducer } from "./store/store";
 import { CalendarMonth } from "./calendar/calendar";
 
 

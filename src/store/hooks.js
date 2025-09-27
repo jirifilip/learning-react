@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { StoreContext, DispatchContext } from "./lib";
+import { StoreContext, DispatchContext } from "./context";
 
 export function useAppDispatch() {
     return useContext(DispatchContext)

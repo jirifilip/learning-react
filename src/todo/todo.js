@@ -1,4 +1,4 @@
-import { useAppDispatch } from "./hooks"
+import { useAppDispatch } from "../store/hooks"
 
 export function ToDo({name, id}) {
     const dispatch = useAppDispatch()

@@ -1,5 +1,5 @@
 import { useState, useContext, useReducer, useEffect } from "react";
-import { useAppDispatch, useAppStore } from "./hooks";
+import { useAppDispatch, useAppStore } from "../store/hooks";
 import { ToDo } from "./todo";
 
 export function TodoList({ text }) {
