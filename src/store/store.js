@@ -1,3 +1,5 @@
+import makeDate from "./utils"
+
 export const reducer = (state, action) => {
     switch (action.type) {
         case "todo/fetched":
@@ -12,6 +14,22 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 todosFetched: false
+            }
+        case "calendar/event-focus": 
+            return {
+                ...state,
+                calendar: {
+                    ...state.calendar,
+                    focusedEvent: action.eventId
+                }
+            }
+        case "calendar/event-unfocus": 
+            return {
+                ...state,
+                calendar: {
+                    ...state.calendar,
+                    focusedEvent: null
+                }
             }
         case "ADD":
             return {
@@ -40,5 +58,30 @@ export const initialState = {
     todos: [
         {id: 1, name: "Clean up room"},
         {id: 2, name: "Do grocery shopping"}
-    ]
+    ],
+    calendar: {
+        events: [
+            {id: 1, date: makeDate(2025, 9, 1), description: "Work 8:00 - 12:00"},
+            {id: 2, date: makeDate(2025, 9, 1), description: "Home office"},
+            {id: 3, date: makeDate(2025, 9, 2), description: "Home office 1/2"},
+        ],
+        focusedEvent: null
+    } 
+}
+
+
+export function selectEventsByDate(state, date) {
+    return state.calendar.events
+        .filter(event => event.date.getTime() == date.getTime())
+}
+
+
+export function selectEventById(state, id) {
+    return state.calendar.events
+        .filter(event => event.id == id)[0]
+}
+
+
+export function selectFocusedEvent(state) {
+    return selectEventById(state, state.calendar.focusedEvent)
 }

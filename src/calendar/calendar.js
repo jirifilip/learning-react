@@ -1,7 +1,93 @@
 import { useState } from "react"
+import { useAppDispatch, useAppStore } from "../store/hooks"
+import { selectEventById, selectEventsByDate, selectFocusedEvent } from "../store/store"
+import makeDate from "../store/utils"
+
+
+function useFocusStyle(focusStyle, unfocusedStyle) {
+    const [focused, setFocused] = useState(false)
+
+    const onFocused = () => setFocused(true)
+    const onUnFocused = () => setFocused(false)
+    
+    return {
+        onFocused,
+        onUnFocused,
+        style: focused ? focusStyle : unfocusedStyle
+    }
+}
+
+
+export function EventInspectorModal({children, closeCallback}) {
+    const focusProps = useFocusStyle({color: "red"}, {color: "black"})
+    
+    const style = {
+        border: "1px solid blue",
+        backgroundColor: "lightgreen"
+    }
+
+    return <div style={style}>
+        <p style={focusProps.style} onMouseEnter={focusProps.onFocused} onMouseLeave={focusProps.onUnFocused} onClick={closeCallback}>CLOSE</p>
+        {children}
+    </div>
+}
+
+
+export function EventInspector() {
+    const store = useAppStore()
+    const dispatch = useAppDispatch()
+
+    if (!store.calendar.focusedEvent) {
+        return <EventInspectorModal>
+            No Event Selected!
+        </EventInspectorModal>
+    }
+
+    const event = selectFocusedEvent(store)
+
+    return <EventInspectorModal closeCallback={() => dispatch({type: "calendar/event-unfocus"})}>
+        {event.description}
+    </EventInspectorModal>
+}
+
+
+export function Event({id, description}) {
+    const dispatch = useAppDispatch()
+    const focusProps = useFocusStyle({backgroundColor: "red"}, {backgroundColor: "pink"})
+
+    function handleEventFocus() {
+        dispatch({type: "calendar/event-focus", eventId: id})
+    }
+
+    const style = {
+        border: "1px solid red",
+        backgroundColor: "pink",
+        borderRadius: "10px",
+        padding: "0.5%",
+        ...focusProps.style
+    }   
+
+    return <div 
+        onMouseEnter={focusProps.onFocused} 
+        onMouseLeave={focusProps.onUnFocused} 
+        onClick={handleEventFocus} style={style}>
+            {description}
+        </div>
+}
+
+
+export function Events({year, month, day}) {
+    const store = useAppStore()
+    const events = selectEventsByDate(store, makeDate(year, month, day))
+
+    return <>
+        {events.map(event => <Event key={event.id} id={event.id} description={event.description}/>)}
+    </>
+}
+
 
 export function Day({n}) {
-    const [focused, setFocused] = useState(false)
+    const focusProps = useFocusStyle({backgroundColor: "cyan"}, {backgroundColor: "grey"})
 
     const style = {
         display: "inline-block",
@@ -9,15 +95,16 @@ export function Day({n}) {
         borderRadius: "10px",
         margin: "5px",
         padding: "2%",
-        backgroundColor: focused ? "cyan" : "grey",
+        ...focusProps.style
     }
 
     return (
         <div
-            onMouseEnter={() => setFocused(true)}
-            onMouseLeave={() => setFocused(false)}
+            onMouseEnter={focusProps.onFocused}
+            onMouseLeave={focusProps.onUnFocused}
             style={style}>
                 {n}
+                <Events year={2025} month={9} day={n} />
         </div>
     )
 }
@@ -39,7 +126,6 @@ export function Rowed({nRows, children}) {
             ({start, end}) => children.slice(start, end)
         )
 
-    console.log(rows)
     return <>
         {rows.map(
             (row, rowI) => <div key={rowI}>
@@ -54,9 +140,12 @@ export function CalendarMonth({nDays = 31}) {
     const dayRange = Array(nDays).fill(0).map((_, i) => i + 1)
     const days = dayRange.map((day, i) => <Day n={day} key={i}></Day>)
     
-    return <div>
-        <Rowed nRows={3}>
-            {days}
-        </Rowed>
-    </div>
+    return <>
+        <div>
+            <Rowed nRows={5}>
+                {days}
+            </Rowed>
+        </div>
+        <EventInspector />
+    </>
 }
