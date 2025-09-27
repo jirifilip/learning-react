@@ -27,8 +27,10 @@ export function EventInspectorModal({children, closeCallback}) {
     }
 
     return <div style={style}>
-        <p style={focusProps.style} onMouseEnter={focusProps.onFocused} onMouseLeave={focusProps.onUnFocused} onClick={closeCallback}>CLOSE</p>
-        {children}
+        <button style={focusProps.style} onMouseEnter={focusProps.onFocused} onMouseLeave={focusProps.onUnFocused} onClick={closeCallback}>CLOSE</button>
+        <div>
+            {children}
+        </div>
     </div>
 }
 
