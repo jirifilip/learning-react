@@ -1,6 +1,4 @@
-import { act } from "react"
-
-export const todoReducer = (state, action) => {
+export const reducer = (state, action) => {
     switch (action.type) {
         case "todo/fetched":
             return {
@@ -37,7 +35,7 @@ export const todoReducer = (state, action) => {
 }
 
 
-export const todoInitialState = {
+export const initialState = {
     todosFetched: false,
     todos: [
         {id: 1, name: "Clean up room"},

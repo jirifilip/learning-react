@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { TodoContext, TodoDispatchContext } from "./lib";
+import { StoreContext, DispatchContext } from "./lib";
 
 export function useAppDispatch() {
-    return useContext(TodoDispatchContext)
+    return useContext(DispatchContext)
 }
 
 export function useAppStore() {
-    return useContext(TodoContext)
+    return useContext(StoreContext)
 }

@@ -1,8 +1,8 @@
 import { createRoot } from "react-dom/client";
 import { TodoList } from "./todo-list";
-import { ExampleContext, TodoContext, TodoDispatchContext } from "./lib";
+import { ExampleContext, StoreContext, DispatchContext } from "./lib";
 import { useReducer } from "react";
-import { todoInitialState, todoReducer } from "./reducer";
+import { initialState, reducer } from "./reducer";
 import { CalendarMonth } from "./calendar/calendar";
 
 
@@ -12,14 +12,14 @@ const root = createRoot(document.getElementById("react-root"))
 
 
 function Index({children}) {
-    const [todoState, todoDispatch] = useReducer(todoReducer, todoInitialState)
+    const [todoState, todoDispatch] = useReducer(reducer, initialState)
 
     return <>
-        <TodoContext value={todoState}>
-            <TodoDispatchContext value={todoDispatch}>
+        <StoreContext value={todoState}>
+            <DispatchContext value={todoDispatch}>
                 {children}
-            </TodoDispatchContext>
-        </TodoContext>
+            </DispatchContext>
+        </StoreContext>
     </>
 }
 
