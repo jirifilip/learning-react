@@ -9,7 +9,7 @@ export function Day({n}) {
         borderRadius: "10px",
         margin: "5px",
         padding: "2%",
-        backgroundColor: focused ? "cyan" : "white",
+        backgroundColor: focused ? "cyan" : "grey",
     }
 
     return (
@@ -24,20 +24,38 @@ export function Day({n}) {
 
 
 export function Rowed({nRows, children}) {
-    const nChildren = children.length
+    const nChildren = children.length 
+    const nChildrenPerRow = Math.round(nChildren / nRows)
 
+    const rows = Array(nRows)
+        .fill(0)
+        .map(
+            (_, i) => ({
+                start: i * nChildrenPerRow, 
+                end: i == nRows - 1 ? undefined : (i + 1) * nChildrenPerRow
+            })
+        )
+        .map(
+            ({start, end}) => children.slice(start, end)
+        )
+
+    console.log(rows)
     return <>
-        {children}
+        {rows.map(
+            (row, rowI) => <div key={rowI}>
+                {row.map((element, i) => <span key={i}>{element}</span>)}    
+            </div>
+        )}
     </>
 }
 
 
-export function CalendarMonth({nDays = 30}) {
+export function CalendarMonth({nDays = 31}) {
     const dayRange = Array(nDays).fill(0).map((_, i) => i + 1)
     const days = dayRange.map((day, i) => <Day n={day} key={i}></Day>)
     
     return <div>
-        <Rowed>
+        <Rowed nRows={3}>
             {days}
         </Rowed>
     </div>
