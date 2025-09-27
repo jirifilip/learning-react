@@ -3,6 +3,7 @@ import { TodoList } from "./todo-list";
 import { ExampleContext, TodoContext, TodoDispatchContext } from "./lib";
 import { useReducer } from "react";
 import { todoInitialState, todoReducer } from "./reducer";
+import { CalendarMonth } from "./calendar/calendar";
 
 
 export { TodoList as MyButton }
@@ -23,8 +24,11 @@ function Index({children}) {
 }
 
 
+// <TodoList text="Add a new text! Wohoo!"/>
+
+
 root.render(
     <Index>
-        <TodoList text="Add a new text! Wohoo!"/>
+        <CalendarMonth></CalendarMonth>
     </Index>
 )
