@@ -90,6 +90,7 @@ export function Events({year, month, day}) {
 
 export function Day({n}) {
     const focusProps = useFocusStyle({backgroundColor: "cyan"}, {backgroundColor: "grey"})
+    const [contextMenuVisible, setContextMenuVisible] = useState(false)
 
     const style = {
         display: "inline-block",
@@ -100,13 +101,27 @@ export function Day({n}) {
         ...focusProps.style
     }
 
+    function handleCreateEvent(event) {
+        event.preventDefault()
+        setContextMenuVisible(true)
+    }
+
+    function handleClick(event) {
+        setContextMenuVisible(false)
+    }
+
     return (
         <div
             onMouseEnter={focusProps.onFocused}
             onMouseLeave={focusProps.onUnFocused}
+            
+            onContextMenu={handleCreateEvent}
+            onClick={handleClick}
+            
             style={style}>
                 {n}
                 <Events year={2025} month={9} day={n} />
+                {contextMenuVisible ? <div>blaaaa</div> : <></>}
         </div>
     )
 }
